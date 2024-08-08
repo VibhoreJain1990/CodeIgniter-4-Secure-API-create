@@ -52,6 +52,7 @@ return $this
      */
     public function login()
     {
+
         $rules = [
             'email' => 'required|min_length[6]|max_length[50]|valid_email',
             'password' => 'required|min_length[8]|max_length[255]|validateUser[email, password]'
@@ -62,10 +63,27 @@ return $this
                 'validateUser' => 'Invalid login credentials provided'
             ]
         ];
+        
+        $body = $this->request->getBody();
 
-$input = $this->getRequestInput($this->request);
+        // Decode JSON payload
+        $data = json_decode($body, true);
+        
+        // Check if JSON decoding was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Invalid JSON data'
+            ]);
+        }
 
-
+        if (!isset($data['email']) || !isset($data['password'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Email and password are required'
+            ]);
+        }
+        $input=$data;
         if (!$this->validateRequest($input, $rules, $errors)) {
             return $this
                 ->getResponse(
