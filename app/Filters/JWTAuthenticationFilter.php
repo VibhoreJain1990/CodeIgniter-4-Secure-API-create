@@ -15,8 +15,19 @@ class JWTAuthenticationFilter implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
+        //log_message('error', 'vibhroe'.$request->getMethod());
+        if ($request->getMethod() === 'OPTIONS') {
+            $response = service('response');
+            $response->setStatusCode(ResponseInterface::HTTP_OK)
+                     ->setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+                     ->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                     ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                     ->setHeader('Access-Control-Max-Age', '86400');
+            return $response;
+        }
+
         $authenticationHeader = $request->getServer('HTTP_AUTHORIZATION');
-        //echo $authenticationHeader;die;
+        
         try {
 
             helper('jwt');
@@ -31,7 +42,7 @@ class JWTAuthenticationFilter implements FilterInterface
                     [
                         'error' => $e->getMessage()
                     ]
-                )
+                    )
                 ->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
 
         }
