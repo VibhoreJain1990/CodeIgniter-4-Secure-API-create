@@ -114,18 +114,11 @@ class Filters extends BaseFilters
                 'create_todo',
                 'show_todo/(:num)',    
                 'update_todo/(:num)',                            
-                'delete_todo/(:num)'
+                'delete_todo/(:num)',
+                'user_login',
                 // Other routes where you want to apply CORS
             ],
         ],
     ];
-    // global filters
-    // method filters
-    /*public array $filters = [
-        'auth' => [
-          'before' => [
-              'client/*'
-        ],
-      ]
-    ];*/
 }
+
