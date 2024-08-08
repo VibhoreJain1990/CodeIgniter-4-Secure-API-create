@@ -10,9 +10,9 @@ class Cors implements FilterInterface
     {
 
         // Check for OPTIONS request (preflight request)
-        if ($request->getMethod() === 'options') {
+        if ($request->getMethod() === 'OPTIONS') {
             $response = service('response');
-            $response->setStatusCode(200)
+            $response->setStatusCode(ResponseInterface::HTTP_OK)
                      ->setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
                      ->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
                      ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
