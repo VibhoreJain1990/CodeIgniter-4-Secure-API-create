@@ -121,4 +121,3 @@ class Filters extends BaseFilters
         ],
     ];
 }
-
