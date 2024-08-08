@@ -1,3 +1,4 @@
+
 <?php namespace App\Controllers;
 
 use App\Models\TodosModel;
@@ -30,12 +31,6 @@ class Todos extends BaseController
             ]);
         }
         
-        /*
-        $data = [
-            'title' => $this->request->getPost('title'),
-            'description' => $this->request->getPost('description'),
-        ];
-        */
         // Validate if the necessary data is present
         if (!isset($data['title']) || !isset($data['description'])) {
             return $this->response->setJSON([
