@@ -24,15 +24,16 @@ $routes->get('get_todos','Todos::index',['filter' => 'auth']);//now its a secure
 $routes->options('get_todos','Todos::index',['filter' => 'auth']);
 //only the authenticated user can view this resource, i mean the person with jwt token(after login). 
 
-$routes->post('create_todo', 'Todos::create');//soon you will be awake by me 
+$routes->post('create_todo', 'Todos::create',['filter' => 'auth']);//soon you will be awake by me 
 $routes->options('create_todo', 'Todos::create');//to using options to save ourself from preflight errors. 
 
 //$routes->get('show_todo/(:num)', 'Todos::show/$1');
 
-$routes->put('update_todo/(:num)', 'Todos::update/$1');
-$routes->options('update_todo/(:num)', 'Todos::update/$1');
+$routes->put('update_todo/(:num)', 'Todos::update/$1',['filter' => 'auth']);
+$routes->options('update_todo/(:num)', 'Todos::update/$1');//we should not give filter auth in options. 
+//because options are used for preflight only.. 
 
-$routes->delete('delete_todo/(:num)', 'Todos::delete/$1');
+$routes->delete('delete_todo/(:num)', 'Todos::delete/$1',['filter' => 'auth']);
 $routes->options('delete_todo/(:num)', 'Todos::delete/$1');
 
 
